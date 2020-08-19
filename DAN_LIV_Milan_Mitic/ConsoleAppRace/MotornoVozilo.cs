@@ -15,7 +15,10 @@ namespace ConsoleAppRace
         public string Boja { get; set; }
         public int BrojMotora { get; set; }
 
-        public virtual void Kreni() { }
+        public virtual void Kreni()
+        {
+            Console.WriteLine("Vozilo je krenulo");
+        }
 
         public virtual void Zaustavi() { }
     }
