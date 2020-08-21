@@ -46,6 +46,7 @@ namespace ConsoleAppRace
                 automobil.PostaviNaStart();
                 automobil.PreostaloGorivo = 100;
                 automobil.potrosnjaPoSekudni = r.Next(6, 9);
+                automobil.Boja = "Crveni";
             }
             Automobil automobil3 = new Automobil();
             automobil3.Boja = "narandzasta";
@@ -59,6 +60,7 @@ namespace ConsoleAppRace
             Thread t2 = new Thread(() => automobil2.TrkajSe());
             Thread t3 = new Thread(() => automobil3.TrkajSe());
             Thread semafor = new Thread(() => Automobil.Semafor());
+            semafor.IsBackground = true;
 
             semafor.Start();
             t1.Start();

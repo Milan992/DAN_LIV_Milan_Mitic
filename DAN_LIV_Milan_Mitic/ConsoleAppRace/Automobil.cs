@@ -13,6 +13,8 @@ namespace ConsoleAppRace
         public static Random r = new Random();
         static AutoResetEvent are = new AutoResetEvent(false);
         static readonly object o = new object();
+        static readonly object l = new object();
+        static int counter = 1;
 
         public string RegOznaka { get; set; }
         public int brojVrata { get; set; }
@@ -68,7 +70,6 @@ namespace ConsoleAppRace
         {
             Stopwatch s = new Stopwatch();
             Stopwatch t = new Stopwatch();
-            Stopwatch u = new Stopwatch();
             Stopwatch v = new Stopwatch();
 
             s.Start();
@@ -128,16 +129,24 @@ namespace ConsoleAppRace
             }
             v.Stop();
 
-            Console.WriteLine("\n\t {0} je zavrsio trku!\n", RegOznaka);
+            lock (l)
+            {
+                Console.WriteLine("\n\t {0} je zavrsio trku!", RegOznaka);
+                if (Boja == "Crveni")
+                {
+                    Console.WriteLine("{0}. crveni auto.\n", counter);
+                    counter++;
+                }
+            }
         }
 
         public static void Semafor()
         {
             Stopwatch s = new Stopwatch();
             s.Start();
-            while (s.ElapsedMilliseconds < 100000)
+            while (s.ElapsedMilliseconds < 999999999999)
             {
-                if (s.ElapsedMilliseconds % 2000 == 0)
+                if (s.ElapsedMilliseconds % 2000 < 10)
                 {
                     are.Set();
                 }
@@ -147,6 +156,5 @@ namespace ConsoleAppRace
                 }
             }
         }
-
     }
 }
